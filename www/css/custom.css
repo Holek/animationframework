@@ -1,0 +1,89 @@
+/* =========================================================== */
+
+/* TEXT STYLING */
+
+.text {
+  /* standard text that you put on the scene via scene.write() */
+
+  /* values that are same for all font families */
+  font-size: 39px;
+  line-height: 50px;
+
+
+  /* sans-serif font stack: */
+  font-family: Helvetica, Arial, "Nimbus Sans L", "Liberation Sans", sans-serif;
+
+  /* serif font stack: */
+  /*font-family: Cambria, Georgia, "New Century Schoolbook", "Century Schoolbook L", "Times New Roman", serif;*/
+
+  /* monospace font stack: */
+  /*font-family: "Lucida Sans Typewriter", "Lucida Typewriter", "Courier New", Courier, monospace;*/
+
+  /* ...or set up your own font stack! For inspiration search the web e.g. for "guide to css font stacks". */
+
+  /* background of text: */
+  display: block;
+  padding: 5px 15px;
+  margin: -5px -15px;
+  background: rgba(255,255,255,0.4);
+
+  /* rounded corners */
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+
+/* colors and sizes used only in a few texts: */
+
+.text.grey {
+  color: #aaa;
+}
+
+.text.black {
+  color: #000;
+}
+
+.text.small {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.text p {
+  padding: 0;
+  margin: 20px 0;
+}
+
+.text .center {
+  text-align: center
+}
+
+.text a {
+  color: #33e;
+  text-decoration: none;
+}
+
+/* =========================================================== */
+/* BACKGROUND AND STAGE */
+
+body {
+  /* the page itself */
+  background-color: #111;
+  background-image: url(../images/texture.jpg);
+  padding: 0;
+  margin: 0;
+}
+
+.stage {
+  /* the whole visible animation */
+  background-color: white;
+
+  -webkit-box-shadow:  7px 7px 20px 5px rgba(0, 0, 0, 0.6);
+  box-shadow:  7px 7px 20px 5px rgba(0, 0, 0, 0.6);
+
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+

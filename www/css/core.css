@@ -1,0 +1,73 @@
+div, img {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}
+
+.stage {
+  overflow: hidden;
+  position: relative;
+}
+
+.scene {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.alltransitions {
+
+}
+
+.scene > * {
+  position: absolute;
+}
+
+#musicbutton {
+  position: absolute;
+  z-index: 2000;
+}
+
+.text.black {
+  color: black;
+}
+
+.small {
+  font-size: 20px;
+  line-height: 27px;
+}
+
+.text {
+  z-index: 1000;
+}
+
+.text a {
+  color: #53f;
+}
+
+.navigation {
+  -webkit-transition: opacity 0.6s ease-in;
+  -moz-transition: opacity 0.6s ease-in;
+  -o-transition: opacity 0.6s ease-in;
+  transition: opacity 0.6s ease-in;
+}
+
+/*  ------------- */
+
+#compatibility {
+  width: 520px;
+  padding: 20px;
+  border: 1px solid #999;
+  margin: 50px 25px;
+}
+#compatibility h1,
+#compatibility p,
+#compatibility li {
+  font-family: sans-serif;
+  padding: 0;
+  margin: 10px 0 0 0;
+}
+#compatibility a {
+  color: #33f;
+}
+

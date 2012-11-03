@@ -1,0 +1,76 @@
+<!-- 
+
+Animation Framework, initiated by Mehreinfach (http://mehreinfach.de)
+
+official website & community: http://animation.io
+open source code: https://github.com/mehreinfach/animationframework
+a project by Mehreinfach: http://mehreinfach.de 
+
+- - -
+
+This HTML-page loads the unminified code of all source files
+separately and is intended for developemt. Consider loading
+only the file "animationframework.js" for production purposes.
+
+-->
+
+
+<!doctype html>
+<html>
+	<head>
+		<title>Animation Template</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<link rel="stylesheet" type="text/css" href="css/core.css" charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="css/custom.css" charset="utf-8">
+
+		<!-- animation core: -->
+		<script src="js/animation/core/animation.js"></script>
+		<script src="js/animation/core/actor.js"></script>
+		<script src="js/animation/core/helpers.js"></script>
+		<script src="js/animation/core/scene.js"></script>
+		<script src="js/animation/core/plugin.js"></script>
+		<script src="js/animation/core/eventhandling.js"></script>
+		<script src="js/animation/core/array-extension.js"></script>
+
+		<!-- animation plugins: -->
+		<script src="js/animation/plugins/waves.js"></script>
+		<script src="js/animation/plugins/moves.js"></script>
+		<script src="js/animation/plugins/swings.js"></script>
+		<script src="js/animation/plugins/pulsates.js"></script>
+		<script src="js/animation/plugins/dissolves.js"></script>
+		<script src="js/animation/plugins/rotates.js"></script>
+		<script src="js/animation/plugins/reacts.js"></script>
+		<script src="js/animation/plugins/plays.js"></script>
+		<script src="js/animation/plugins/drifts.js"></script>
+		<script src="js/animation/plugins/shakes.js"></script>
+		<script src="js/animation/plugins/links.js"></script>
+
+		<!-- your scenes: -->
+		<script src="js/scenes/scene0.js"></script>
+		<script src="js/scenes/scene1.js"></script>
+		<script src="js/scenes/scene2.js"></script>
+		<script src="js/scenes/scene3.js"></script>
+		<script src="js/scenes/scene4.js"></script>
+		<script src="js/scenes/scene5.js"></script>
+		<script src="js/scenes/scene6.js"></script>
+		<script src="js/scenes/scene7.js"></script>
+	</head>
+
+	<!-- preload elements for scene0, navigation and audio: -->
+	<div id="preload" style="display: none;">
+		<img src="images/katze.png">
+		<img src="images/katze2.png">
+		<img src="images/arrow-right.png">
+		<img src="images/arrow-left.png">
+		<audio src="audio/quack.mp3"></audio>
+	</div>
+
+	<body>
+		<script>
+			loadAnimation('Animation Framework', 800, 600, 'scene0');
+		</script>
+	</body>
+</html>
