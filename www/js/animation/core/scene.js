@@ -46,6 +46,22 @@ function Scene(id, title){
 		};
 	};
 
+	this.mute = function(){
+		for (var i = 0; i < this.actors.length; i++) {
+			try {
+				this.actors[i].pauseAudio();
+			} catch(e){}
+		};
+	};
+
+	this.muteOthers = function(){
+		for (var i = window.animation.loadedScenes.length - 1; i >= 0; i--) {
+			if (!window.animation.loadedScenes[i].id.match(this.id)) {
+				window.animation.loadedScenes[i].mute();
+			};
+		};
+	};
+
 	this.createActor = function(filename, startAtX, startAtY, width, height){
 		var actor = new Actor(filename, startAtX, startAtY, width, height);
 		actor.scene = this;
@@ -55,14 +71,6 @@ function Scene(id, title){
 
 	this.enterActors = function(){
 		for (var i = 0; i < this.actors.length; i++) this.actors[i].enter(this);
-	};
-
-	this.switchOffAudio = function(){
-		for (var i = 0; i < window.stage.scene.actors.length; i++) {
-			try {
-				window.stage.scene.actors[i].pauseAudio();
-			} catch(e){}
-		};
 	};
 
 	this.putOnStage = function(myStageDiv){
@@ -75,10 +83,9 @@ function Scene(id, title){
 		this.div.style.width = this.dimensions.x + 'px';
 		this.div.style.height = this.dimensions.y + 'px';
 
-		for (var i = 0; i < window.stage.scene.actors.length; i++)
-		  this.actors[i].enter(this);
-
-		this.hideOtherScenes();
+		for (var i = 0; i < window.stage.scene.actors.length; i++){
+			this.actors[i].enter(this);
+		};
 	};
 
 	this.write = function(myX, myY, html, cssclass){

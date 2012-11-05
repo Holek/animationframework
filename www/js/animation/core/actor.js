@@ -1,4 +1,7 @@
 var Actor = function(imagePath, startX, startY, imagesizeX, imagesizeY){
+	var defaultImageDirectory = 'images/';
+	var defaultAudioDirectory = 'audio/';
+
 	this.startAnimationTimestamp = new Date().getTime();
 	this.resetStartAnimationTimestamp = function(){
 		this.startAnimationTimestamp = new Date().getTime();
@@ -46,7 +49,7 @@ var Actor = function(imagePath, startX, startY, imagesizeX, imagesizeY){
 			this.currentOpacity = newOpacity;
 			this.image.style.opacity = this.currentOpacity;
 		};
-	}
+	};
 
 	this.resets = function(resetDelay){
 		// called in scenes when an actor should be resetting
@@ -55,7 +58,7 @@ var Actor = function(imagePath, startX, startY, imagesizeX, imagesizeY){
 			resetDelay = 0;
 		};
 		this.resetDelay = resetDelay;
-	}
+	};
 
 	this.reset = function(){
 		// reset all behaviors
@@ -69,7 +72,7 @@ var Actor = function(imagePath, startX, startY, imagesizeX, imagesizeY){
 			} catch(e){};
 		};
 
-		this.image.src = this.image.originalPath;
+		this.image.src = defaultImageDirectory + this.image.originalPath;
 		this.resetStartAnimationTimestamp();
 		this.position = {x: startX, y: startY};
 		this.vector = {x: 0, y: 0};
@@ -110,8 +113,8 @@ var Actor = function(imagePath, startX, startY, imagesizeX, imagesizeY){
 
 	this.addPhase = function(phaseImagePath){
 		var tmpImage = document.createElement('img');
-		tmpImage.setAttribute('src', phaseImagePath);
-		this.phases.push(phaseImagePath);
+		tmpImage.setAttribute('src', defaultImageDirectory + phaseImagePath);
+		this.phases.push(defaultImageDirectory + phaseImagePath);
 	};
 
 	this.setPhaseCycleLength = function(milliseconds){
@@ -124,20 +127,20 @@ var Actor = function(imagePath, startX, startY, imagesizeX, imagesizeY){
 
 		if (numberOfPhases > 1) {
 			// we have an original image and an extra phase image
-			var passedTimeSinceEntered = new Date().getTime() - this.enteredAt; //
+			var passedTimeSinceEntered = new Date().getTime() - this.enteredAt;
 			var lengthOfPhase = this.phaseCycle  / numberOfPhases;
 			var rest = passedTimeSinceEntered % (numberOfPhases * lengthOfPhase);
 			myPhase = parseInt(rest / lengthOfPhase);
 		}
 		return myPhase;
-	}
+	};
 
 	this.setup = function(){
 		this.image = document.createElement('img');
-		this.image.originalPath = 'images/' + imagePath;
-		this.image.setAttribute('src', this.image.originalPath);
+		this.image.originalPath = imagePath;
+		this.image.setAttribute('src', defaultImageDirectory  + this.image.originalPath);
 		this.image.actor = this;
-		this.phases.push(imagePath);
+		this.phases.push(defaultImageDirectory + imagePath);
 
 		this.position = {x: startX, y: startY};
 		this.setSize(imagesizeX, imagesizeY);
@@ -163,7 +166,7 @@ function tiltActor(actor){
 	actor.image.style.msTransform = 'rotate(' + actor.tilt + 'deg)'; // Webkit (Chrome, Safari)
 	actor.image.style.OTransform = 'rotate(' + actor.tilt + 'deg)'; //Opera
 	actor.spin = 0;
-}
+};
 
 function visibleOnStage(actor){
 	return !notVisibleOnStage;
@@ -171,7 +174,7 @@ function visibleOnStage(actor){
 
 function notVisibleOnStage(actor){
 	return (actor.position.x > actor.scene.dimensions.x) || ((actor.position.x + actor.imagesize.x) < 0) || ((actor.position.y + actor.imagesize.y) < 0) || (actor.position.y > actor.scene.dimensions.y);
-}
+};
 
 function animateactor(actor){
 	if (notVisibleOnStage(actor)) {

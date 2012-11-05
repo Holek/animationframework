@@ -31,8 +31,8 @@ function Animation(width, height, minWidth, maxWidth){
 		for (var i = this.loadedScenes.length - 1; i >= 0; i--) {
 			if (this.loadedScenes[i].id.match(sceneid)) {
 				return this.loadedScenes[i];
-			}
-		}
+			};
+		};
 
 		// if we reached this point, the scene isn't loaded yet.
 		var newScene = eval(sceneid + '()');
@@ -51,6 +51,7 @@ function Animation(width, height, minWidth, maxWidth){
 		this.currentScene.enterActors();
 		this.currentScene.resetActors();
 		this.currentScene.makeOthersInvisible();
+		this.currentScene.muteOthers();
 		this.dropUnneededScenes(this.currentScene.preloadSceneIds);
 		this.loadNeededScenes(this.currentScene.preloadSceneIds);
 	};
@@ -75,7 +76,7 @@ function Animation(width, height, minWidth, maxWidth){
 		var loadlist = neededScenes.minus(this.loadedSceneIds());
 		for (var i = loadlist.length - 1; i >= 0; i--) {
 			this.loadScene(loadlist[i]);
-		}
+		};
 	};
 
 	this.dropScene = function(sceneid){
@@ -84,10 +85,9 @@ function Animation(width, height, minWidth, maxWidth){
 				var element = document.getElementById(sceneid);
 				this.stageDiv.removeChild(this.loadedScenes[i].div);
 				this.loadedScenes = this.loadedScenes.without(i);
-			}
-		}
-	}
-
+			};
+		};
+	};
 	return this;
 }
 
@@ -157,4 +157,4 @@ function startLoop(){
 			};
 	};
 	this.animloop();
-}
+};
