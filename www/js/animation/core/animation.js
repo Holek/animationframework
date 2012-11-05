@@ -1,4 +1,4 @@
-function Animation(width, height, minWidth, maxWidth){
+function Animation(width, height, minWidth, maxWidth, minHeight, maxHeight){
 	this.loadedScenes = new Array;
 	this.stageDiv = createDiv('stage', 'stage');
 	this.stageDiv.style.width = width + 'px';
@@ -7,24 +7,50 @@ function Animation(width, height, minWidth, maxWidth){
 	this.height = height;
 	this.minWidth = minWidth;
 	this.maxWidth = maxWidth;
+	this.minHeight = minHeight;
+	this.maxHeight = maxHeight;
 
-	this.scaleToWidth = function(newWidth){
-		if (this.minWidth != 0 && newWidth < this.minWidth) {
-			newWidth = this.minWidth
-		} else if (this.minWidth != 0 && newWidth > this.maxWidth) {
-			newWidth = this.maxWidth;
+	this.scaleToWindow = function(){
+		var winWidth = window.innerWidth;
+		var winHeight = window.innerHeight;
+		var newHeight = winHeight;
+		var newWidth = winWidth;
+		var winWidth = winWidth
+
+		var windowFactor = window.innerWidth / window.innerHeight;
+		var animationFactor = this.width / this.height;
+
+		if (this.minWidth != 0 && (animationFactor > windowFactor)) {
+			// the WIDTH has to be set
+			if (winWidth < this.minWidth) {
+				winWidth = this.minWidth
+			} else if (winWidth > this.maxWidth) {
+				winWidth = this.maxWidth;
+			};
+			var scaleFactor = winWidth / this.width;
+			newHeight = winWidth * scaleFactor;
+
+		} else if (this.minWidth != 0){
+			// the HEIGHT has to be set
+			if (winHeight < this.minHeight) {
+				winHeight = this.minHeight
+			} else if (winHeight > this.maxHeight) {
+				winHeight = this.maxHeight;
+			};
+			var scaleFactor = winHeight / this.height;
+			newWidth = winHeight * scaleFactor;
 		};
-		var scaleFactor = newWidth / this.width;
-		rescale(this.stageDiv, scaleFactor);
+
+		if (scaleFactor != 1) {
+			rescale(this.stageDiv, scaleFactor);
+		};
 
 		// position on screen:
 		window.animationwrapper.style.marginTop = ((window.innerHeight - parseInt(this.height * scaleFactor))/2) + 'px';
+		window.animationwrapper.style.width = newWidth + 'px';
 		window.animationwrapper.style.marginLeft = ((window.innerWidth - parseInt(this.width * scaleFactor))/2) + 'px';
+		window.animationwrapper.style.height = newHeight + 'px';
 	};
-
-	this.scaleToWindowWidth = function(){
-		this.scaleToWidth(window.innerWidth);
-	}
 
 	this.loadScene = function(sceneid){
 		// is the scene maybe already loaded?
@@ -47,7 +73,7 @@ function Animation(width, height, minWidth, maxWidth){
 		// console.log("SHOWING SCENE " + sceneid);
 		this.currentScene = loadScene(sceneid);
 		var sceneNum = getIntegerFromEndOfString(sceneid);
-		window.location.hash = sceneNum == 0 ? '' : sceneNum; 
+		window.location.hash = sceneNum == 0 ? '' : sceneNum;
 		this.currentScene.enterActors();
 		this.currentScene.resetActors();
 		this.currentScene.makeOthersInvisible();
@@ -91,7 +117,7 @@ function Animation(width, height, minWidth, maxWidth){
 	return this;
 }
 
-function loadAnimation(title, width, height, firstScene, minWidth, maxWidth){
+function loadAnimation(title, width, height, firstScene, minWidth, maxWidth, minHeight, maxHeight){
 	document.title = title;
 
 	if(!browserCompatible()){
@@ -114,10 +140,10 @@ function loadAnimation(title, width, height, firstScene, minWidth, maxWidth){
 		// scroll away address bar:
 		setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
-		window.animation = Animation(width, height, minWidth, maxWidth);
+		window.animation = Animation(width, height, minWidth, maxWidth, minHeight, maxHeight);
 		window.animationwrapper = createDiv('animationwrapper', '');
 		window.document.body.appendChild(window.animationwrapper);
-		window.animation.scaleToWidth(window.innerWidth);
+		window.animation.scaleToWindow();
 		window.animationwrapper.appendChild(this.stageDiv);
 
 		// read scene-number from hashtag in URL or start with default:
@@ -133,7 +159,7 @@ function loadAnimation(title, width, height, firstScene, minWidth, maxWidth){
 	if (window.onresize) var oldOnresize = window.onresize;
 	window.onresize = function() {
 		if(oldOnresize) oldOnresize();
-		window.animation.scaleToWindowWidth();
+		window.animation.scaleToWindow();
 	};
 }
 
