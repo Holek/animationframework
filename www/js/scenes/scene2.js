@@ -10,8 +10,8 @@ var scene2 = function(){
   var arrow1 = scene.createActor('arrow-left.png', 30, 450);
   arrow1.navigatesOnTouch('scene1');
 
-  var arrow2 = scene.createActor('arrow-right.png', 670, 450);
-  arrow2.navigatesOnTouch('scene3');
+  var arrow2 = scene.createActor('arrow-right.png', 610, 430, 160, 139);
+  arrow2.navigatesOnTouch('scene3', 'arrow-right-active.png');
 
   scene.write(100, 10, "box.shakes(30, 30, 2)");
   scene.write(100, 350, "box.shakesOnTouch(30, 30, 2)");

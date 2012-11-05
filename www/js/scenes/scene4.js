@@ -10,8 +10,8 @@ var scene4 = function(){
   var arrow1 = scene.createActor('arrow-left.png', 30, 450);
   arrow1.navigatesOnTouch('scene3');
 
-  var arrow2 = scene.createActor('arrow-right.png', 600, 440);
-  arrow2.navigatesOnTouch('scene5');
+  var arrow2 = scene.createActor('arrow-right.png', 610, 430, 160, 139);
+  arrow2.navigatesOnTouch('scene5', 'arrow-right-active.png');
 
   scene.write(100, 10, "actor.dissolves(1000, 10000);");
   scene.write(100, 350, "actor.dissolvesOnTouch(5000);");

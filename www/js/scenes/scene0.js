@@ -9,7 +9,7 @@ function scene0(){
 	katze.resets(1500);
 	katze.drifts(-1, 0);
 
-	var arrow = scene.createActor('arrow-right.png', 550, 450, 160, 139);
+	var arrow = scene.createActor('arrow-right.png', 610, 430, 160, 139);
 	arrow.navigatesOnTouch('scene1', 'arrow-right-active.png')
 
 	scene.write(30, 40, "animation.io", "black");

@@ -12,4 +12,4 @@ The "Open Source JavaScript Animation Framework for Artists and Illustrators" (i
 
 ## Creator
 
-* The animation framework was initiated by [Mehreinfach](http://mehreinfach.de) who developed it while creating their own animated book apps. 
+* The animation framework was initiated by [Mehreinfach](http://mehreinfach.de) who developed it while creating their own animated bookapps. 

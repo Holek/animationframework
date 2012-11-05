@@ -7,8 +7,8 @@ var scene5 = function(){
   var arrow1 = scene.createActor('arrow-left.png', 30, 450);
   arrow1.navigatesOnTouch('scene4');
 
-  var arrow2 = scene.createActor('arrow-right.png', 550, 440);
-  arrow2.navigatesOnTouch('scene6');
+  var arrow2 = scene.createActor('arrow-right.png', 610, 430, 160, 139);
+  arrow2.navigatesOnTouch('scene6', 'arrow-right-active.png');
 
   scene.write(100, 10, "actor.waves(15, 0.25, 100, 200);");
 
