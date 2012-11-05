@@ -5,10 +5,11 @@ function Animation(width, height, minWidth, maxWidth, minHeight, maxHeight){
 	this.stageDiv.style.height = height + 'px';
 	this.width = width;
 	this.height = height;
-	this.minWidth = minWidth;
-	this.maxWidth = maxWidth;
-	this.minHeight = minHeight;
-	this.maxHeight = maxHeight;
+
+	this.minWidth = (typeof minWidth == 'undefined') ? this.width : minWidth ;
+	this.maxWidth = (typeof maxWidth == 'undefined') ? this.width : maxWidth ;
+	this.minHeight = (typeof minHeight == 'undefined') ? this.height : minHeight ;
+	this.maxHeight = (typeof maxHeight == 'undefined') ? this.height : maxHeight ;
 
 	this.scaleToWindow = function(){
 		var winWidth = window.innerWidth;
