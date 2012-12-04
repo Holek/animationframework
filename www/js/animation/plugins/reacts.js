@@ -8,20 +8,15 @@ function Reacting(actor, action, actionimagepath, actionimagelength){
 		actionimagepath = 'images/' + actionimagepath;
 		document.createElement('img').setAttribute('src', actionimagepath);
 		reacting.actor.image.actionimagepath = actionimagepath;
-	}
-
+	};
 
 	var myEventType;
 	if( /iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
-		//reacting.actor.image.addEventListener('touchstart', function(){this.changeImageAndReact();}, false);
 		myEventType = 'touchstart';
 	 } else {
-		// reacting.actor.image.addEventListener('mousedown', function(){this.changeImageAndReact();}, false);
 		myEventType = 'mousedown';
-	}
+	};
 	bindEvent(reacting.actor.image, myEventType, function(){changeImageAndReact.call(reacting.actor.image);});
-	// bindEvent(reacting.actor.image, myEventType, function(){this.changeImageAndReact();});
-	// bindEvent(reacting.actor.image, myEventType, function(){alert(this);});
 
 	reacting.actor.image.style.cursor = 'pointer';
 

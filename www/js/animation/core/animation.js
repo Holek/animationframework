@@ -1,187 +1,109 @@
-function Animation(width, height, minWidth, maxWidth, minHeight, maxHeight){
-	this.loadedScenes = new Array;
-	this.stageDiv = createDiv('stage', 'stage');
-	this.stageDiv.style.width = width + 'px';
-	this.stageDiv.style.height = height + 'px';
-	this.width = width;
-	this.height = height;
-
-	this.minWidth = (typeof minWidth == 'undefined') ? this.width : minWidth ;
-	this.maxWidth = (typeof maxWidth == 'undefined') ? this.width : maxWidth ;
-	this.minHeight = (typeof minHeight == 'undefined') ? this.height : minHeight ;
-	this.maxHeight = (typeof maxHeight == 'undefined') ? this.height : maxHeight ;
-
-	this.scaleToWindow = function(){
-		var winWidth = window.innerWidth;
-		var winHeight = window.innerHeight;
-		var newHeight = winHeight;
-		var newWidth = winWidth;
-		var winWidth = winWidth
-
-		var windowFactor = window.innerWidth / window.innerHeight;
-		var animationFactor = this.width / this.height;
-
-		if (this.minWidth != 0 && (animationFactor > windowFactor)) {
-			// the WIDTH has to be set
-			if (winWidth < this.minWidth) {
-				winWidth = this.minWidth
-			} else if (winWidth > this.maxWidth) {
-				winWidth = this.maxWidth;
-			};
-			var scaleFactor = winWidth / this.width;
-			newHeight = winWidth * scaleFactor;
-
-		} else if (this.minWidth != 0){
-			// the HEIGHT has to be set
-			if (winHeight < this.minHeight) {
-				winHeight = this.minHeight
-			} else if (winHeight > this.maxHeight) {
-				winHeight = this.maxHeight;
-			};
-			var scaleFactor = winHeight / this.height;
-			newWidth = winHeight * scaleFactor;
-		};
-
-		if (scaleFactor != 1) {
-			rescale(this.stageDiv, scaleFactor);
-		};
-
-		// position on screen:
-		window.animationwrapper.style.marginTop = ((window.innerHeight - parseInt(this.height * scaleFactor))/2) + 'px';
-		window.animationwrapper.style.width = newWidth + 'px';
-		window.animationwrapper.style.marginLeft = ((window.innerWidth - parseInt(this.width * scaleFactor))/2) + 'px';
-		window.animationwrapper.style.height = newHeight + 'px';
-	};
-
-	this.loadScene = function(sceneid){
-		// is the scene maybe already loaded?
-		for (var i = this.loadedScenes.length - 1; i >= 0; i--) {
-			if (this.loadedScenes[i].id.match(sceneid)) {
-				return this.loadedScenes[i];
-			};
-		};
-
-		// if we reached this point, the scene isn't loaded yet.
-		var newScene = eval(sceneid + '()');
-		newScene.setDimensions(width, height);
-		this.loadedScenes.push(newScene);
-		this.stageDiv.appendChild(newScene.div);
-		newScene.makeInvisible();
-		return newScene;
-	};
-
-	this.showScene = function(sceneid){
-		// console.log("SHOWING SCENE " + sceneid);
-		this.currentScene = loadScene(sceneid);
-		var sceneNum = getIntegerFromEndOfString(sceneid);
-		window.location.hash = sceneNum == 0 ? '' : sceneNum;
-		this.currentScene.enterActors();
-		this.currentScene.resetActors();
-		this.currentScene.makeOthersInvisible();
-		this.currentScene.muteOthers();
-		this.dropUnneededScenes(this.currentScene.preloadSceneIds);
-		this.loadNeededScenes(this.currentScene.preloadSceneIds);
-	};
-
-	this.loadedSceneIds = function(){
-		var result = new Array;
-		for (var i = this.loadedScenes.length - 1; i >= 0; i--) {
-			result.push(this.loadedScenes[i].id);
-		};
-		return result;
-	};
-
-	this.dropUnneededScenes = function(neededScenes){
-		// neededScenes: array if scene-ids
-		var droplist = this.loadedSceneIds().minus(neededScenes);
-		for (var i = droplist.length - 1; i >= 0; i--) {
-			this.dropScene(droplist[i]);
-		};
-	};
-
-	this.loadNeededScenes = function(neededScenes){
-		var loadlist = neededScenes.minus(this.loadedSceneIds());
-		for (var i = loadlist.length - 1; i >= 0; i--) {
-			this.loadScene(loadlist[i]);
-		};
-	};
-
-	this.dropScene = function(sceneid){
-		for (var i = this.loadedScenes.length - 1; i >= 0; i--) {
-			if (this.loadedScenes[i].id.match(sceneid)) {
-				var element = document.getElementById(sceneid);
-				this.stageDiv.removeChild(this.loadedScenes[i].div);
-				this.loadedScenes = this.loadedScenes.without(i);
-			};
-		};
-	};
-	return this;
+function Animation(a, b, c, d, f, h, g) {
+    this.firstSceneId = c;
+    this.loadedScenes = [];
+    this.stageDiv = createDiv("stage", "stage");
+    this.stageDiv.style.width = a + "px";
+    this.stageDiv.style.height = b + "px";
+    this.width = a;
+    this.height = b;
+    this.textIsDisplaying = !0;
+    this.minWidth = "undefined" == typeof d ? this.width : d;
+    this.maxWidth = "undefined" == typeof f ? this.width : f;
+    this.minHeight = "undefined" == typeof h ? this.height : h;
+    this.maxHeight = "undefined" == typeof g ? this.height : g;
+    this.scaleToWindow = function () {
+        var a = window.innerWidth,
+            c = window.innerHeight,
+            b = c,
+            d = a,
+            f = window.innerWidth / window.innerHeight,
+            h = this.width / this.height;
+        if (0 != this.minWidth && h > f) {
+            a < this.minWidth ? a = this.minWidth : a > this.maxWidth && (a = this.maxWidth);
+            var g = a / this.width,
+                b = a * g
+        } else 0 != this.minWidth && (c < this.minHeight ? c = this.minHeight : c > this.maxHeight && (c = this.maxHeight), g = c / this.height, d = c * g);
+        1 != g && rescale(this.stageDiv, g);
+        window.animationwrapper.style.marginTop = (window.innerHeight - parseInt(this.height * g)) / 2 + "px";
+        window.animationwrapper.style.width = d + "px";
+        window.animationwrapper.style.marginLeft = (window.innerWidth - parseInt(this.width * g)) / 2 + "px";
+        window.animationwrapper.style.height = b + "px"
+    };
+    this.loadScene = function (c) {
+        for (var d = this.loadedScenes.length - 1; 0 <= d; d--) if (this.loadedScenes[d].id === c) return this.loadedScenes[d];
+        c = eval(c + "()");
+        c.setDimensions(a, b);
+        this.loadedScenes.push(c);
+        this.stageDiv.appendChild(c.div);
+        c.makeInvisible();
+        return c
+    };
+    this.showScene = function (a) {
+        if ("undefined" === typeof this.currentScene || 1E3 < this.currentScene.age() || "undefined" !== typeof developermode && developermode) this.currentScene = loadScene(a), a = getIntegerFromEndOfString(a), window.location.hash = 0 == a ? "" : a, this.currentScene.enterActors(), this.currentScene.resetActors(), this.currentScene.makeOthersInvisible(), this.currentScene.muteOthers(), this.currentScene.resetAge(), this.dropUnneededScenes(this.currentScene.preloadSceneIds), this.loadNeededScenes(this.currentScene.preloadSceneIds)
+    };
+    this.showFirstScene = function () {
+        this.showScene(this.firstSceneId)
+    };
+    this.loadedSceneIds = function () {
+        for (var a = [], c = this.loadedScenes.length - 1; 0 <= c; c--) a.push(this.loadedScenes[c].id);
+        return a
+    };
+    this.dropUnneededScenes = function (a) {
+        for (var a = this.loadedSceneIds().minus(a), c = a.length - 1; 0 <= c; c--) this.dropScene(a[c])
+    };
+    this.loadNeededScenes = function (a) {
+        for (var a = a.minus(this.loadedSceneIds()), c = a.length - 1; 0 <= c; c--) this.loadScene(a[c])
+    };
+    this.dropScene = function (a) {
+        for (var c = this.loadedScenes.length - 1; 0 <= c; c--) this.loadedScenes[c].id === a && (document.getElementById(a), this.stageDiv.removeChild(this.loadedScenes[c].div), this.loadedScenes = this.loadedScenes.without(c))
+    };
+    return this
 }
 
-function loadAnimation(title, width, height, firstScene, minWidth, maxWidth, minHeight, maxHeight){
-	document.title = title;
-
-	if(!browserCompatible()){
-		var div = document.createElement('div');
-		div.setAttribute('id', 'compatibility');
-		var headline = "Please upgrade your browser"
-		div.innerHTML += '<h1>' + headline + '</h1>';
-		var text1 = 'You need a more modern browser to view this awesome animation.';
-		div.innerHTML += '<p>' + text1 + '</p>';
-		var text2 = 'More information: <a href="http://animation.io/compatible-browsers.html">http://animation.io/compatible-browsers.html</a>';
-		div.innerHTML += '<p>' + text2 + '</p>';
-		document.body.appendChild(div);
-		return;
-	}
-
-	if (window.onload) var oldOnload = window.onload;
-	window.onload = function(){
-		if (oldOnload) oldOnload();
-
-		// scroll away address bar:
-		setTimeout(function() { window.scrollTo(0, 1) }, 100);
-
-		window.animation = Animation(width, height, minWidth, maxWidth, minHeight, maxHeight);
-		window.animationwrapper = createDiv('animationwrapper', '');
-		window.document.body.appendChild(window.animationwrapper);
-		window.animation.scaleToWindow();
-		window.animationwrapper.appendChild(this.stageDiv);
-
-		// read scene-number from hashtag in URL or start with default:
-		var sceneNum = parseInt(window.location.hash.substring(1));
-		if (isNaN(sceneNum)) {
-			window.animation.showScene(firstScene);
-		} else{
-			eval("window.animation.showScene('scene" + sceneNum + "')");
-		};
-		window.animation.startLoop();
-	};
-
-	if (window.onresize) var oldOnresize = window.onresize;
-	window.onresize = function() {
-		if(oldOnresize) oldOnresize();
-		window.animation.scaleToWindow();
-	};
+function loadAnimation(a, b, c, d, f, h, g, e) {
+    document.title = a;
+    if (browserCompatible()) {
+        if (window.onload) var i = window.onload;
+        window.onload = function () {
+            i && i();
+            setTimeout(function () {
+                window.scrollTo(0, 1)
+            }, 100);
+            window.animation = Animation(b, c, d, f, h, g, e);
+            window.animationwrapper = createDiv("animationwrapper", "");
+            window.document.body.appendChild(window.animationwrapper);
+            window.animation.scaleToWindow();
+            window.animationwrapper.appendChild(this.stageDiv);
+            var a = parseInt(window.location.hash.substring(1));
+            isNaN(a) ? window.animation.showScene(d) : eval("window.animation.showScene('scene" + a + "')");
+            window.animation.startLoop()
+        };
+        if (window.onresize) var j = window.onresize;
+        window.onresize = function () {
+            j && j();
+            window.animation.scaleToWindow()
+        }
+    } else a = document.createElement("div"), a.setAttribute("id", "compatibility"), a.innerHTML += "<h1>Please upgrade your browser</h1>", a.innerHTML += "<p>You need a more modern browser to view this awesome animation.</p>", a.innerHTML += '<p>More information: <a href="http://animation.io/compatible-browsers.html">http://animation.io/compatible-browsers.html</a></p>',
+    document.body.appendChild(a)
 }
+requestAnimFrame = function () {
+    return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (a) {
+        window.setTimeout(a, 1E3 / 60)
+    }
+}();
 
-// requestAnim shim layer by Paul Irish
-requestAnimFrame = (function(){
-  return  window.requestAnimationFrame       ||
-          window.webkitRequestAnimationFrame ||
-          window.mozRequestAnimationFrame    ||
-          window.oRequestAnimationFrame      ||
-          window.msRequestAnimationFrame     ||
-          function(/* function */ callback, /* DOMElement */ element){
-            window.setTimeout(callback, 1000 / 60);
-          };
-})();
+function startLoop() {
+    this.animloop = function () {
+        requestAnimFrame(animloop);
+        for (var a = 0; a < window.currentScene.actors.length; a++) animateactor(window.currentScene.actors[a])
+    };
+    this.animloop()
+};
 
-function startLoop(){
-	this.animloop = function(){
-		requestAnimFrame(animloop);
-			for (var i = 0; i < window.currentScene.actors.length; i++) {
-				animateactor(window.currentScene.actors[i]);
-			};
-	};
-	this.animloop();
+Array.prototype.minus = function (a) {
+    for (var b = this, c = b.length - 1; 0 <= c; c--) for (var d = a.length - 1; 0 <= d; d--) if (a[d].match(b[c])) {
+        b = b.without(c);
+        break
+    }
+    return b
 };

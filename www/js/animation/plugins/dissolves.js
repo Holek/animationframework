@@ -4,7 +4,7 @@ function Dissolving(actor, startAt, dissolveLength){
   var newOpacity;
 
   this.reset = function(){
-    this.actor.setOpacity(originalOpacity);
+    this.actor.alterOpacity(originalOpacity);
     this.dissolveStartedAt = new Date().getTime();
   };
 
@@ -15,7 +15,7 @@ function Dissolving(actor, startAt, dissolveLength){
       };
 
       newOpacity = 1 + ((this.dissolveStartedAt - (new Date().getTime())) / dissolveLength);
-      this.actor.setOpacity(newOpacity);
+      this.actor.alterOpacity(newOpacity);
     };
   };
 }
