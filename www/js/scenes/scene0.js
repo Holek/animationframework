@@ -7,6 +7,7 @@ function scene0(){
 	katze.delays(1500);
 	katze.resets(1500);
 	katze.drifts(-1, 0);
+	katze.setOpacity(0.5);
 
 	var arrow = scene.createActor('arrow-right.png', 610, 430, 160, 139);
 	arrow.navigatesOnTouch('scene1', 'arrow-right-active.png')
