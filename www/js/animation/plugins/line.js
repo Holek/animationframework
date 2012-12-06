@@ -1,7 +1,8 @@
 function LineDrawer(actor, imageX, imageY, sceneX, sceneY){
 
   var lineElement = document.createElement('div'),
-      rad2Deg = 180 / Math.PI;
+      rad2Deg = 180 / Math.PI,
+      deg2Rad = Math.PI / 180;
   lineElement.style.borderTop = "1px solid #000";
   lineElement.style.height = "10px";
   lineElement.style.backgroundColor = "#F00";
@@ -11,8 +12,8 @@ function LineDrawer(actor, imageX, imageY, sceneX, sceneY){
   actor.scene.div.appendChild(lineElement);
   this.applybehavior = function(){
     var actorAngle = actor.tilt + actor.spin;
-    var sin = Math.sin(actorAngle)
-      , cos = Math.cos(actorAngle)
+    var sin = Math.sin(actorAngle * deg2Rad)
+      , cos = Math.cos(actorAngle * deg2Rad)
       , x = actor.position.x
       , y = actor.position.y
       , newX, newY, angle, a,b,c;
@@ -21,12 +22,9 @@ function LineDrawer(actor, imageX, imageY, sceneX, sceneY){
   [x'] = [x*cos(alpha) - y*sin(alpha)]
   [y'] = [x*sin(alpha) + y*cos(alpha)]
 
-
-
-
   */
-    newX = ((imageX) * cos - (imageY) * sin) + x;
-    newY = ((imageX) * sin + (imageY) * cos) + y;
+    newX = ((imageX) * cos - (imageY) * sin);
+    newY = ((imageX) * sin + (imageY) * cos);
     a = (sceneY-newY);
     b = (sceneX-newX);
     c = Math.sqrt((a*a)+(b*b));
