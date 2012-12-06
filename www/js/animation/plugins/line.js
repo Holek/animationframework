@@ -3,7 +3,8 @@ function LineDrawer(actor, imageX, imageY, sceneX, sceneY){
   var lineElement = document.createElement('div'),
       rad2Deg = 180 / Math.PI;
   lineElement.style.borderTop = "1px solid #000";
-  lineElement.style.height = "1px";
+  lineElement.style.height = "10px";
+  lineElement.style.backgroundColor = "#F00";
   lineElement.style.position = "absolute";
   lineElement.style.transformOrigin = "0 0";
   lineElement.style.webkitTransformOrigin = "0 0";
@@ -15,10 +16,19 @@ function LineDrawer(actor, imageX, imageY, sceneX, sceneY){
       , x = actor.position.x
       , y = actor.position.y
       , newX, newY, angle, a,b,c;
-    newX = (imageX * cos - imageY * sin) + x;
-    newY = (imageX * sin + imageY * cos) + y;
-    a = Math.abs(sceneY-newY);
-    b = Math.abs(sceneX-newX);
+
+  /*
+  [x'] = [x*cos(alpha) - y*sin(alpha)]
+  [y'] = [x*sin(alpha) + y*cos(alpha)]
+
+
+
+
+  */
+    newX = ((imageX) * cos - (imageY) * sin) + x;
+    newY = ((imageX) * sin + (imageY) * cos) + y;
+    a = (sceneY-newY);
+    b = (sceneX-newX);
     c = Math.sqrt((a*a)+(b*b));
     angle = 360 - (Math.asin(a/c) * rad2Deg);
     lineElement.style.width = c + "px";

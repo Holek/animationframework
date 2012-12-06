@@ -3,7 +3,7 @@ function scene0(){
 
 	var star = scene.createActor('pink_star.png', 200, 150, 300, 300);
 	star.rotates(.2);
-	star.drawsLine(20, 30, 100, 100);
+	star.drawsLine(1, 1, 100, 500);
 
 	return scene;
 };
