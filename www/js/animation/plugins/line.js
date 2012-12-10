@@ -9,6 +9,8 @@ function LineDrawer(actor, imageX, imageY, sceneX, sceneY){
   lineElement.style.position = "absolute";
   lineElement.style.transformOrigin = "0 0";
   lineElement.style.webkitTransformOrigin = "0 0";
+  lineElement.style.top = sceneX + "px";
+  lineElement.style.left = sceneY + "px";
   actor.scene.div.appendChild(lineElement);
   this.applybehavior = function(){
     var actorAngle = actor.tilt + actor.spin;
@@ -23,15 +25,13 @@ function LineDrawer(actor, imageX, imageY, sceneX, sceneY){
   [y'] = [x*sin(alpha) + y*cos(alpha)]
 
   */
-    newX = ((imageX) * cos - (imageY) * sin);
-    newY = ((imageX) * sin + (imageY) * cos);
-    a = (sceneY-newY);
-    b = (sceneX-newX);
+    newX = ((imageX + x) * cos) - ((imageY + y) * sin) + x;
+    newY = ((imageX + x) * sin) + ((imageY + y) * cos) + y;
+    a = (newY-sceneY);
+    b = (newX-sceneX);
     c = Math.sqrt((a*a)+(b*b));
-    angle = 360 - (Math.asin(a/c) * rad2Deg);
+    angle = 360 - (Math.atan(a/b) * rad2Deg);
     lineElement.style.width = c + "px";
-    lineElement.style.top = (newY + a) + "px";
-    lineElement.style.left = (newX + b) + "px";
     // lineElement.style.transform = "rotate: "+ angle + "deg";
     // lineElement.style.mozTransform = "rotate: "+ angle + "deg";
     lineElement.style.webkitTransform = "rotate("+ angle + "deg)";
